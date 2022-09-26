@@ -12,7 +12,7 @@ class AwesomeClickButton {
 
     byte buttonPin;     // the number of the pushbutton pin
 
-    int buttonState = 0;         // variable for reading the pushbutton status
+    int buttonState = 1;         // variable for reading the pushbutton status
     int clickCount = 0;
     long lastClickTime = 0;
     long lastDebouceTime = 0;
@@ -72,7 +72,7 @@ class AwesomeClickButton {
   public:
     AwesomeClickButton(byte buttonPin) {
       this->buttonPin = buttonPin;
-      pinMode(buttonPin, INPUT);
+      pinMode(buttonPin, INPUT_PULLUP );
     }
 
     void setSingleClickTime(int value) {
@@ -117,14 +117,14 @@ class AwesomeClickButton {
 
         int currentButtonState = digitalRead(buttonPin);
 
-        if (buttonState != currentButtonState && currentButtonState == HIGH) {
+        if (buttonState != currentButtonState && currentButtonState == LOW) {
           clickCount++;
           lastClickTime = millis();
           onClickingHappened(clickCount);
         }
         else {
           int deltaTime = millis() - lastClickTime;
-          if (currentButtonState == LOW) {
+          if (currentButtonState == HIGH) {
             if (clickCount == 1 && deltaTime > singleClickTime) {
               if (deltaTime > longClickTime) {
                 onLongClickHappened((millis() - lastClickTime));
