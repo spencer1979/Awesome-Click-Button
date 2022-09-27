@@ -1,4 +1,5 @@
 #ifndef AWESOME_CLICK_BUTTON_H
+#include <functional>
 #define AWESOME_CLICK_BUTTON_H
 typedef std::function<void()> OnClickListener;
 typedef std::function<void(int clickCount)> OnMultiClickListener;
@@ -117,7 +118,7 @@ class AwesomeClickButton {
 
         int currentButtonState = digitalRead(buttonPin);
 
-        if (buttonState != currentButtonState && currentButtonState == LOW) {
+        if (buttonState != currentButtonState && currentButtonState == LOW ) {
           clickCount++;
           lastClickTime = millis();
           onClickingHappened(clickCount);
